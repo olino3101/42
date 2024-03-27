@@ -1,0 +1,181 @@
+access sert a savoir si le fichier a la permission de le lire 
+#include <unistd.h>
+#include <stdio.h>
+
+int main() {
+    if (access("fichier.txt", R_OK) == 0) {
+        printf("Le fichier est accessible en lecture.\n");
+    } else {
+        printf("Le fichier n'est pas accessible en lecture.\n");
+    }
+    return 0;
+}
+
+
+dup est pour dupliquer un descripteur de fichier en gros je croisya un affaire avec pointer
+#include <unistd.h>
+#include <fcntl.h>
+#include <stdio.h>
+
+int main() {
+    int fd_redirect_to = open("file", O_CREAT | O_WRONLY);
+    if (fd_redirect_to == -1) {
+        perror("Erreur lors de l'ouverture du fichier");
+        return 1;
+    }
+    close(1); // Fermer stdout
+    int fd_to_redirect = dup(fd_redirect_to); // Dupliquer le descripteur de fichier
+    if (fd_to_redirect == -1) {
+        perror("Erreur lors de la duplication du descripteur de fichier");
+        return 1;
+    }
+    close(fd_redirect_to); // Fermer le descripteur de fichier original
+
+    printf("Ceci sera écrit dans le fichier 'file'.\n");
+
+    return 0;
+}
+
+dup2 je crois que ca fait comme dup mais tu peux specifier le type de descripteur de fichier cible etsi le fichier etait deja ouvert il le ferme
+
+
+execve je crois que ca sert a remplacer le programme courant par un nouveau ca peut etre comme une action ex "ls"
+#include <unistd.h>
+
+int main() {
+    char *argv[] = {"/bin/ls", "-l", NULL};
+    char *envp[] = {NULL};
+    execve("/bin/ls", argv, envp);
+    return 0;
+}
+
+int main(void) {
+    char *argv[] = { "/bin/ls", "-l", NULL };
+    char *envp[] = { "PATH=/bin:/usr/bin", "HOME=/home/user", NULL };
+    execve(argv[0], argv, envp);
+    fprintf(stderr, "Oops!\n");
+    return -1;
+}
+
+la fonctione pipe prend un tableau de 2 int et lui met deux descripteur de fichier, 1 pour lecture et lautre ecriture
+processus parent: ecrire dans la pipe
+processus enfant: lecture depuis le pipe
+
+#include <stdio.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <stdlib.h>
+
+void read_from_pipe(int file) {
+    FILE *stream;
+    int c;
+    stream = fdopen(file, "r");
+    while ((c = fgetc(stream)) != EOF)
+        putchar(c);
+    fclose(stream);
+}
+
+void write_to_pipe(int file) {
+    FILE *stream;
+    stream = fdopen(file, "w");
+    fprintf(stream, "hello, world!\n");
+    fprintf(stream, "goodbye, world!\n");
+    fclose(stream);
+}
+
+int main(void) {
+    pid_t pid;
+    int mypipe[2];
+
+    if (pipe(mypipe) == -1) {
+        fprintf(stderr, "Pipe failed.\n");
+        return 1;
+    }
+
+    pid = fork();
+    if (pid < 0) {
+        fprintf(stderr, "Fork failed.\n");
+        return 1;
+    }
+
+    if (pid == 0) { // Processus enfant
+        close(mypipe[1]); // Fermer la fin d'écriture du pipe dans le processus enfant
+        read_from_pipe(mypipe[0]); // Lire depuis le pipe
+        close(mypipe[0]);
+    } else { // Processus parent
+        close(mypipe[0]); // Fermer la fin de lecture du pipe dans le processus parent
+        write_to_pipe(mypipe[1]); // Écrire dans le pipe
+        close(mypipe[1]);
+    }
+
+    return 0;
+}
+
+exemple 2
+
+int main() {
+    int pipefds[2];
+    int returnstatus;
+    char writemessages[2][20] = {"Hi", "Hello"};
+    char readmessage[20];
+
+    returnstatus = pipe(pipefds);
+
+    if (returnstatus == -1) {
+        printf("Unable to create pipe\n");
+        return 1;
+    }
+
+    pid_t pid = fork();
+    if (pid < 0) {
+        printf("Fork failed.\n");
+        return 1;
+    }
+
+    if (pid == 0) { // Processus enfant
+        close(pipefds[1]); // Fermer la fin d'écriture du pipe dans le processus enfant
+        read(pipefds[0], readmessage, sizeof(readmessage));
+        printf("Reading from pipe – Message 1 is %s\n", readmessage);
+        read(pipefds[0], readmessage, sizeof(readmessage));
+        printf("Reading from pipe – Message 2 is %s\n", readmessage);
+        close(pipefds[0]);
+    } else { // Processus parent
+        close(pipefds[0]); // Fermer la fin de lecture du pipe dans le processus parent
+        write(pipefds[1], writemessages[0], sizeof(writemessages[0]));
+        write(pipefds[1], writemessages[1], sizeof(writemessages[1]));
+        close(pipefds[1]);
+    }
+}
+
+fork
+creer un copy du processus parent (donc appeler processus enfant) sa change rien au processus parent mais
+le processus enfant commence lorsque fork est appeler
+
+unlink suprime le lien vers un fichier
+si il ny a pu de lien qui pointe vers un fichier le fichier est delete sauf si il a ete allouer en memoire
+Utilisation dans des exemples : unlink est souvent utilisé dans des scénarios où vous devez remplacer des fichiers 
+par de nouvelles versions ou supprimer des fichiers temporaires après leur utilisation.
+
+
+int main() {
+    const char *path = "/chemin/vers/le/fichier";
+    int status = unlink(path);
+
+    if (status == 0) {
+        printf("Le fichier a été supprimé avec succès.\n");
+    } else {
+        perror("Erreur lors de la suppression du fichier");
+    }
+
+    return 0;
+}
+
+wait attendre que un processus enfant sois terminer
+waitpid au lieu dattendre nimporte quelle processus enfant il est possible de le spécifier
+
+fork
+int fd[2];
+the pipe(fd);
+
+[0] [1]
+[0] [1]
