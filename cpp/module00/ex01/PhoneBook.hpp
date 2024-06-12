@@ -4,45 +4,47 @@
 #include <iostream>
 #include <string>
 
-
-using namespace std;
-
 class Contact {
 public:
-    string firstName;
-    string lastName;
-    string phoneNumber;
-    string darkestSecret;
-    string nickName;
-    string index;
+	void print(int i);
+	void print_format(std::string Contact::* memberPtr);
     void askInfo()
     {
-        cout << "FirstName?" << std::endl;
-       cin >> firstName;
-       cout << "LastName?" << std::endl;
-       cin >> lastName;
-       cout << "NickName?" << std::endl;
-       cin >> nickName;
-       cout << "PhoneNumber?" << std::endl;
-       cin >> phoneNumber;
-       cout << "DarkestSecret?" << std::endl;
-       cin >> darkestSecret;
+       std::cout << "FirstName?" << std::endl;
+       std::cin >> firstName;
+       std::cout << "LastName?" << std::endl;
+       std::cin >> lastName;
+       std::cout << "NickName?" << std::endl;
+       std::cin >> nickName;
+       std::cout << "PhoneNumber?" << std::endl;
+       std::cin >> phoneNumber;
+       std::cout << "DarkestSecret?" << std::endl;
+       std::cin >> darkestSecret;
     }
     void displayContact(const int i)
     {
-        cout << "Index: " << i << std::endl;
-        cout << "First Name: " << firstName << std::endl;
-        cout << "Last Name: " << lastName << std::endl;
-        cout << "Darkest Secret: " << nickName << std::endl;
-        cout << "Phone Number: " << phoneNumber << std::endl;
-        cout << "Darkest Secret: " << darkestSecret << std::endl;
+        std::cout << "Index: " << i << std::endl;
+        std::cout << "First Name: " << firstName << std::endl;
+        std::cout << "Last Name: " << lastName << std::endl;
+        std::cout << "Darkest Secret: " << nickName << std::endl;
+        std::cout << "Phone Number: " << phoneNumber << std::endl;
+        std::cout << "Darkest Secret: " << darkestSecret << std::endl;
     }
+private:
+	std::string firstName;
+    std::string lastName;
+    std::string phoneNumber;
+    std::string darkestSecret;
+    std::string nickName;
+    std::string index;
 };
 class PhoneBook {
 public:
-    Contact contact[8];
-    int size;
-
+	void doSearch(void);
+	void doAdd(int &i);
     PhoneBook() : size(0) {}
+private:
+	Contact contact[8];
+    int size;
 };
 #endif
