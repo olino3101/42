@@ -3,52 +3,54 @@
 #include <fstream>
 #include <cstring>
 
-using namespace std;
-
-void replace(string line, string s1, string s2, ofstream &outfile)
+void replace(std::string line, std::string s1, std::string s2, std::ofstream &outfile)
 {
-    string newline;
+    std::string newline;
     int pos = line.find(s1);
+	
     int i;
-    for (i = 0; i < pos; i++)
-        newline += line[i];
-    i += s1.size();
-    newline += s2;
-    for (i; line[i + 1] != '\0'; i++)
-        newline += line[i];
+	// copy jusqua s1
+	do
+	{
+		for (i = 0; i < pos; i++)
+        	newline += line[i];
+		for (int j = 0; j > s1.size)
+    	i += s1.size();
+    	newline += s2;
+	} while(newline.find(s1) != std::string::npos);
+    for (int ii = i; line[ii] != '\0'; ii++)
+        newline += line[ii];
         
-    outfile << newline << endl;
-    cout << newline << endl;
+    outfile << newline << std::endl;
 }
 
 int main(int argc, char **argv)
 {
-    string newline;
-    string s1 = argv[2];
-    string s2 = argv[3];
+
     if (argc != 4)
     {
-        cout << "wrong number of arguments" << endl;
+        std::cout << "wrong number of arguments" << std::endl;
         return 0;
     }
-    ifstream file(argv[1]);
+	std::string newline;
+    std::string s1 = argv[2];
+    std::string s2 = argv[3];
+    std::ifstream file(argv[1]);
     if (!file)
     {
-        cout << "file not found" << endl;
+        std::cout << "file not found" << std::endl;
         return 0;
     }
-    ofstream  outfile("output.txt");
+    std::ofstream  outfile("output.txt");
     int i = 0;
     while (getline(file, newline) )
     {
-        if (newline.find(s1) != string::npos)
+        if (newline.find(s1) != std::string::npos)
             replace(newline, s1, s2, outfile);
         else
-            outfile << newline << endl;
+            outfile << newline << std::endl;
         i++;
     }
-    cout << i << endl;
     outfile.close();
     file.close();
-
 }
