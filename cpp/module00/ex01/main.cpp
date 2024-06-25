@@ -1,4 +1,5 @@
 #include "PhoneBook.hpp"
+#include "contact.hpp"
 
 bool verifyCommand(const std::string &command)
 {
@@ -17,7 +18,7 @@ int main()
         while (1)
         {
             std::cout << "Enter a command" << std::endl;
-            std::cin >> command;
+			getline(std::cin, command);
             if (verifyCommand(command) == true)
                 break ;
         }

@@ -6,11 +6,12 @@
 /*   By: onault <onault@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 18:07:03 by onault            #+#    #+#             */
-/*   Updated: 2024/06/12 18:13:25 by onault           ###   ########.fr       */
+/*   Updated: 2024/06/25 16:58:48 by onault           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PhoneBook.hpp"
+#include "contact.hpp"
 
 void Contact::print_format(std::string Contact::* memberPtr)
 {
@@ -29,6 +30,30 @@ void Contact::print_format(std::string Contact::* memberPtr)
         std::cout << this->*memberPtr;
     }
     std::cout << "|";
+}
+
+void Contact::displayContact(const int i)
+{
+    std::cout << "Index: " << i << std::endl;
+    std::cout << "First Name: " << firstName << std::endl;
+    std::cout << "Last Name: " << lastName << std::endl;
+    std::cout << "Darkest Secret: " << nickName << std::endl;
+    std::cout << "Phone Number: " << phoneNumber << std::endl;
+    std::cout << "Darkest Secret: " << darkestSecret << std::endl;
+}
+
+void Contact::askInfo()
+{
+	std::cout << "FirstName?" << std::endl;
+	getline(std::cin, firstName);
+	std::cout << "LastName?" << std::endl;
+	getline(std::cin, lastName);
+	std::cout << "NickName?" << std::endl;
+	getline(std::cin, nickName);
+	std::cout << "PhoneNumber?" << std::endl;
+	getline(std::cin, phoneNumber);
+	std::cout << "DarkestSecret?" << std::endl;
+	getline(std::cin, darkestSecret);
 }
 
 void Contact::print(int i)

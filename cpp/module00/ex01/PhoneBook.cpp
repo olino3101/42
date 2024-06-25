@@ -6,12 +6,12 @@
 /*   By: onault <onault@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 18:05:11 by onault            #+#    #+#             */
-/*   Updated: 2024/06/12 18:10:46 by onault           ###   ########.fr       */
+/*   Updated: 2024/06/25 14:57:24 by onault           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "PhoneBook.hpp"
-
+#include "contact.hpp"
 
 void PhoneBook::doAdd(int &i)
 {
@@ -43,14 +43,20 @@ static void printHeader()
 void PhoneBook::doSearch()
 { 
     int i;
-    
+    std::string buf; 
+	if (this->size == 0)
+	{
+		std::cout << "you dont have any contacts" << std::endl;
+		return ;
+	}
     printHeader();
 	for (int i = 0; i < size; i++)
 		this->contact[i].print(i);
     while (1)
     {
         std::cout << "wich one?" << std::endl;
-        std::cin >> i;
+        getline(std::cin, buf);
+		i = std::atoi(buf.c_str());
         if (i <= 0 || i > this->size)
             std::cout << "wrong index or you dont have any" << std::endl;
         else
