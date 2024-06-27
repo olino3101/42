@@ -16,20 +16,6 @@ void replace(std::string line, std::string s1, std::string s2, std::ofstream &ou
         newline += s2;
     } while (line.find(s1) != std::string::npos);
     newline += line;
-    int pos = line.find(s1);
-	
-    int i;
-	// copy jusqua s1
-	do
-	{
-		for (i = 0; i < pos; i++)
-        	newline += line[i];
-		for (int j = 0; j > s1.size)
-    	i += s1.size();
-    	newline += s2;
-	} while(newline.find(s1) != std::string::npos);
-    for (int ii = i; line[ii] != '\0'; ii++)
-        newline += line[ii];
     outfile << newline << std::endl;
 }
 
@@ -41,7 +27,6 @@ int main(int argc, char **argv)
         return 0;
     }
     std::string newline;
-	std::string newline;
     std::string s1 = argv[2];
     std::string s2 = argv[3];
     std::ifstream file(argv[1]);
