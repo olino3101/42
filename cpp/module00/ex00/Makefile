@@ -1,6 +1,17 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: onault <onault@student.42.fr>              +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2024/06/12 13:37:51 by onault            #+#    #+#              #
+#    Updated: 2024/06/25 13:22:48 by onault           ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-CXX = g++
-FLAGS = -Wall -Wextra -Werror  -std=c++98
+CXX = c++
+FLAGS = -Wall -Wextra -Werror
 SRC = megaphone.cpp
 OBJ = $(SRC:.cpp=.o)
 NAME = megaphone
@@ -17,8 +28,8 @@ fclean: clean
 
 re:	fclean all
 
-%.o: %.c
-		$(CC) -c -o $@ $< $(FLAGS)
+%.o: %.cpp
+		$(CXX) $(FLAGS) -c $< -o $@
 
 $(NAME): $(OBJ)
-		ar rcs $(NAME) $(OBJ)
+		$(CXX) $(OBJ) -o $(NAME)
