@@ -1,21 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   HumanA.cpp                                         :+:      :+:    :+:   */
+/*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: onault <onault@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/12 13:41:06 by onault            #+#    #+#             */
-/*   Updated: 2024/06/12 14:10:02 by onault           ###   ########.fr       */
+/*   Created: 2024/06/12 13:34:38 by onault            #+#    #+#             */
+/*   Updated: 2024/06/27 14:05:03 by onault           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "HumanA.hpp"
+#include "Zombie.hpp"
 
-void HumanA::attack(void)
+int main()
 {
-    std::cout << this->_name << " attacks with their " << this->_weapon.getType() << std::endl;
-}
-HumanA::HumanA(std::string name, Weapon &weapon) : _name(name), _weapon(weapon)
-{
+    std::cout << "with new " << std::endl;
+    Zombie *zombi = newZombie("zombie 1");
+    zombi->annouce();
+    delete zombi;
+
+    std::cout << "with not new " << std::endl;
+    randomChump("zombie 2");
+
+    return 0;
 }

@@ -23,7 +23,7 @@ void Harl::error( void )
 void Harl::complain( std::string level )
 {
     int i = 0;
-    void (Harl::*Ptrs[])() = {debug, info, warning, error};
+    void (Harl::*Ptrs[])() = {&Harl::debug, &Harl::info, &Harl::warning, &Harl::error};
     string levels[] = {"DEBUG", "INFO", "WARNING", "ERROR"};
     while (i != 4 && levels[i].compare(level))
         i++;

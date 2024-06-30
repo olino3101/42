@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Zombie.cpp                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: onault <onault@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/06/12 13:34:51 by onault            #+#    #+#             */
+/*   Updated: 2024/06/30 16:14:22 by onault           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "Zombie.hpp"
 
 void Zombie::annouce(void)
@@ -5,25 +17,12 @@ void Zombie::annouce(void)
     std::cout << this->name << ": BraiiiiiiinnnzzzZ..." << std::endl;
 }
 
-void Zombie::setName(string name)
-{   
-    this->name = name;
-}
-
 Zombie::~Zombie()
 {
     std::cout << this->name << " is dead" << std::endl;
 }
 
-int main()
+Zombie::Zombie(std::string name)
 {
-    cout << "with new " << endl;
-    Zombie *zombi = newZombie("zombie 1");
-    zombi->annouce();
-    delete zombi;
-
-    cout << "with not new " << endl;
-    randomChump("zombie 2");
-
-    return 0;
+	this->name = name;
 }

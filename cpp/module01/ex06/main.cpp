@@ -9,6 +9,5 @@ int main(int argc, char **argv)
         cout << "no complaining" << endl;
         return 0;
     }
-        
     him.complain(argv[1]);
 }

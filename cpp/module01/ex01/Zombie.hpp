@@ -3,17 +3,18 @@
 
 # include <iostream>
 # include <string>
-using namespace std;
+
 class Zombie
 {
 
 public:
     void annouce(void);
-    void setName(string name);
 
+	Zombie();
+	Zombie(std::string name);
     ~Zombie();
 private:
-    string name;
+    std::string name;
 };
 
 Zombie* zombieHorde( int N, std::string name );
