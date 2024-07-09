@@ -10,9 +10,9 @@ Brain::~Brain() {
     std::cout << "destructor called for Brain" << std::endl;
 }
 Brain& Brain::operator=(const Brain& other) {
-    // if (this != &other)
-    // {
-    //     std::copy(std::begin(ideas), std::end(ideas), std::begin(this->ideas))
-    // }
+    if (this != &other)
+    {
+        std::copy(std::begin(ideas), std::end(ideas), std::begin(this->ideas));
+    }
     return *this;
 }
