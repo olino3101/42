@@ -6,7 +6,7 @@ int main(int argc, char **argv)
 
     if (argc != 2)
     {
-        cout << "no complaining" << endl;
+        std::cout << "no complaining" << std::endl;
         return 0;
     }
     him.complain(argv[1]);

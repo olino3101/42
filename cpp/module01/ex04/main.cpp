@@ -7,6 +7,10 @@ void replace(std::string line, std::string s1, std::string s2, std::ofstream &ou
 {
     std::string newline;
     int pos;
+<<<<<<< HEAD
+=======
+    int index;
+>>>>>>> 6964f94d58263b4200d518278a68f79af47ea6f0
     do
     {
         pos = line.find(s1);
@@ -44,6 +48,7 @@ int main(int argc, char **argv)
             outfile << newline << std::endl;
         i++;
     }
+    std::cout << i << std::endl;
     outfile.close();
     file.close();
 }

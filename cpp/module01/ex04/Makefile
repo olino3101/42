@@ -3,7 +3,7 @@ FLAGS = -std=c++98 -Wall -Wextra -Werror
 SRC = main.cpp
 OBJ = $(SRC:.cpp=.o)
 NAME = replace
-.PHONY: all clean re fclean bonus
+.PHONY: all clean re fclean
 
 all: $(NAME)
 
