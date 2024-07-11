@@ -13,16 +13,57 @@
 #include "../include/minishell.h"
 
 //Modifie une variable deja existante
+void find_equal(char *str, int *equal_pos)
+{
+    int i;
+    
+    i = 0;
+    while (str[i])
+    {
+        if (str[i] = '=')
+        {
+            *equal_pos = i;
+            return ;
+        }
+        i++;
+    } 
+    *equal_pos = -1;
+}
 void	ft_export_modif(char *argv, char **env_cpy)
 {
-	// int size_of_var;
-	// char *var_to_modif;
-	// size_of_var = ft_strchr(argv, '\0');
-	// var_to_modif = malloc(size_of_var + 1);
+    
+    int i;
+    int equal_pos;
 
-	while (env_cpy)
-	argv = NULL;
+    find_equal(argv, &equal_pos);
+    if (equal_pos == -1)
+        return;
+    char *line = malloc(sizeof(char) * (ft_strlen(argv) + 1));
+    if (!line)
+        return ;
+    ft_strlcpy(line, argv, ft_strlen(argv));
+    i = 0;
+    while (env_cpy[i])
+    {
+        // le modifier pour retourner lindex
+        if (strncmp(env_cpy[i], argv, equal_pos) == 0 && env_cpy[i][equal_pos] == '=')
+        {
+            free(env_cpy[i]);
+            env_cpy[i] = line;
+            return ;
+        }
+        i++;
+    }
+}
 
+void printCharArray(char **array) {
+    int i = 0;
+    while (array[i])
+    {
+        printf("\n");
+        printf("%s", array[i]);
+        i++;
+    }
 }
 
 //add une variable dans l'environement
