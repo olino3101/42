@@ -43,7 +43,48 @@ int	ft_check_quote(char *str)
     return (1);
 }
 
-//ajouter fonction pour gerer $ avec ""
+void search_quotation(char **s, char *end)
+{
+	if (**s == '\'' || **s == '\"')
+	{
+		(*s)++;
+		while (s < end && **s != '\'' && **s != '\"') // chercher la fin de la citation
+            (*s)++;
+        if (*s < end && (**s == '\'' || **s == '\"')) // si la fin de la citation est trouvée
+            (*s)++;
+	}
+}
+
+bool blabla(char **s, char *ret, char chr)
+{
+	if (**s == chr)
+	{
+		(*s)++;
+		if (**s == chr)
+		{
+			if (chr == '<')
+				*ret = '-';
+			else
+				*ret = '+';
+			(*s)++;
+		}
+		return (true);
+	}
+	return (false);
+}
+void redirection_operator(char **s, int *ret, char *end, char *sep)
+{
+	if (*s == '|')
+		s++;
+	else if (blabla(s, ret, '>') || blabla(s, ret, '<'))
+		return ;
+	else
+	{
+		ret = 'a';
+		while (*s < end && !ft_strchr(" \n\t", **s) && !ft_strchr(sep, **s))
+			(*s)++;
+	}
+}
 
 int	ft_add_token(char **begin, char *end, char **cur, char **end_cur)
 {
@@ -57,48 +98,15 @@ int	ft_add_token(char **begin, char *end, char **cur, char **end_cur)
 	if (cur)
 		*cur = s;
 	ret = *s;
-	if (*s != 0)
-	{
-		if (*s == '\'' || *s == '\"')
-		{
-			s++;
-			while (s < end && *s != '\'' && *s != '\"') // chercher la fin de la citation
-                s++;
-            if (s < end && (*s == '\'' || *s == '\"')) // si la fin de la citation est trouvée
-                s++;
-		}
-		if (*s == '|')
-			s++;
-		else if (*s == '>')
-		{
-			s++;
-			if (*s == '>')
-			{
-				ret = '+'; //retourner + si append (+ajopter gestion d'erreur)
-				s++;
-			}
-		}
-		else if (*s == '<')
-		{
-			s++;
-			if (*s == '<')
-			{
-				ret = '-'; //retourner - si heredoc (gestion d'erreur)
-				s++;
-			}
-		}
-		else
-		{
-			ret = 'a';
-			while (s < end && !ft_strchr(" \n\t", *s) && !ft_strchr(sep, *s))
-				s++;
-		}
-		if (end_cur)
-			*end_cur = s;
-		while (s < end && ft_strchr(" \n\t", *s))
-			s++;
-		*begin = s;
-	}
+	if (*s == 0)
+		return (ret);
+	search_quotation(&s, end);
+	redirection_operator(&s, &ret, end, sep);
+	if (end_cur)
+		*end_cur = s;
+	while (s < end && ft_strchr(" \n\t", *s))
+		s++;
+	*begin = s;
 	return (ret);
 }
 
