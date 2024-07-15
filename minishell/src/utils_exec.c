@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msimard <msimard@student.42quebec.com>     +#+  +:+       +#+        */
+/*   By: onault <onault@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 16:09:10 by fcornill          #+#    #+#             */
-/*   Updated: 2024/07/10 15:24:02 by msimard          ###   ########.fr       */
+/*   Updated: 2024/07/15 13:40:14 by onault           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	ft_valid_name(char *str)
 	return (1);
 }
 
-char	**ft_get_envp_cpy(char	**envp)
+char	**ft_get_envp_cpy(char **envp)
 {
 	char	**cpy;
 	int		y;

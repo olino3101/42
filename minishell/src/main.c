@@ -6,12 +6,21 @@
 /*   By: onault <onault@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 13:20:03 by msimard           #+#    #+#             */
-/*   Updated: 2024/07/10 17:00:53 by onault           ###   ########.fr       */
+/*   Updated: 2024/07/15 13:40:05 by onault           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+void	ft_history(char *cmd)
+{
+	HIST_ENTRY	*my_hist;
+	
+	if(!cmd || !*cmd)
+	return ;
+	add_history(cmd);
+	my_hist = history_get(1);
+}
 
 static void	ft_parser(t_data *data)
 {
@@ -19,12 +28,33 @@ static void	ft_parser(t_data *data)
 	int		check;
 
 	str = data->input;
-	check = ft_check_quote(str);
+	check = ft_check_quote_dollar(str, data->envp);
 	if (check)
+		ft_get_cmd(ft_parsecmd(data->input), data);
+}
+
+bool alloc_envp(t_data *data, char **envp)
+{
+	int i = 0;
+
+	while (envp[i])
+		i++;
+	data->envp = malloc(i * sizeof(char *));
+	if (!data->envp)
+		return (false);
+	i = 0;
+	while (envp[i])
 	{
-		ft_parsecmd(data->input);
-		ft_check_cmd(data);
+		data->envp[i] = ft_strdup(envp[i]);
+		if (!data->envp[i])
+		{
+			ft_free(data->envp, "Error allocing memory");
+			return (false);
+		}
+		i++;
 	}
+	data->envp[i] = NULL;
+	return true;
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -34,7 +64,9 @@ int	main(int argc, char **argv, char **envp)
 	signal(SIGQUIT, SIG_IGN);
 	ft_init_signal();
 	data = malloc(sizeof(t_data));
-	data->envp = envp;
+	if (!data && printf("Error allocing memory"))
+		return (0);
+	alloc_envp(data, envp);
 	if (isatty(STDIN_FILENO)) //fonction qui verifie si shell en mode interactive, mais pas util, on peut enlever
 	{
 		while (argc && argv)
@@ -46,7 +78,7 @@ int	main(int argc, char **argv, char **envp)
 				break ;
 			}
 			else
-				add_history(data->input);
+				ft_history(data->input);
 			ft_parser(data);
 			free(data->input);//obligatoire sinon leaks!!
 		}

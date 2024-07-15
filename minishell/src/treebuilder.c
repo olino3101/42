@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   treebuilder.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fcornill <fcornill@student.42.fr>          +#+  +:+       +#+        */
+/*   By: onault <onault@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 10:49:32 by fcornill          #+#    #+#             */
-/*   Updated: 2024/07/09 15:03:35 by fcornill         ###   ########.fr       */
+/*   Updated: 2024/07/15 13:40:12 by onault           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	print_node(t_cmd *node) //fonction pou debug a supprimer a la fin
+/*static void	print_node(t_cmd *node) //fonction pou debug a supprimer a la fin
 {
 	if (node == NULL)
 	{
@@ -20,7 +20,7 @@ static void	print_node(t_cmd *node) //fonction pou debug a supprimer a la fin
 		return ;
 	}
 	ft_printf("Type: %d\nAddress: %x\n", node->type, (void *)node);
-}
+}*/
 
 t_cmd	*ft_build_exec_node(size_t count)
 {
@@ -43,7 +43,7 @@ t_cmd	*ft_build_exec_node(size_t count)
 		free (cmd);
 		return (NULL);
 	}
-	print_node((t_cmd *)cmd);
+	//print_node((t_cmd *)cmd);
 	return ((t_cmd *)cmd); //casté car t_execcmd est une sous structure de cmd
 }
 
@@ -55,7 +55,7 @@ t_cmd	*ft_build_pipe_node(t_cmd *left, t_cmd *right)
 	cmd->type = PIPE;
 	cmd->left = left;
 	cmd->right = right;
-	print_node((t_cmd *)cmd);
+	//print_node((t_cmd *)cmd);
 	return ((t_cmd *)cmd);
 }
 
@@ -70,6 +70,6 @@ t_cmd	*ft_build_redir_node(int type, t_cmd *subcmd, char *file, char *efile)
 	cmd->efile = efile;
 	cmd->mode = 0;//peut etre ne pas initialiser
 	cmd->fd = 0;//idem
-	print_node((t_cmd *)cmd);
+	//print_node((t_cmd *)cmd);
 	return ((t_cmd *)cmd);
 }

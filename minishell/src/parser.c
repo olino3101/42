@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fcornill <fcornill@student.42.fr>          +#+  +:+       +#+        */
+/*   By: onault <onault@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 11:34:46 by fcornill          #+#    #+#             */
-/*   Updated: 2024/07/09 15:10:45 by fcornill         ###   ########.fr       */
+/*   Updated: 2024/07/15 13:40:06 by onault           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ t_cmd	*ft_parsecmd(char *s)
 		exit (EXIT_FAILURE);
 	}
 	ft_nulterminate_str(cmd);
-	ft_printf("ok nulterminate\n");
 	return (cmd);
 }
 
@@ -111,7 +110,6 @@ t_cmd	*ft_parseexec(char **begin, char *end)
 			break ;
 		cmd->argv[argc] = cur;
 		cmd->eargv[argc] = end_cur;
-		ft_printf("cmd de argv: %s\n", cmd->argv[argc]);
 		argc++;
 		ret = ft_parseredir(ret, begin, end);
 	}
