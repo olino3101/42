@@ -67,7 +67,7 @@ void AForm::beSigned(Bureaucrat & bureaucrat) {
         if (bureaucrat.GetGrade() <= gradeMin)
         {
             IsSigned = true;
-            bureaucrat.signAForm(*this);
+            bureaucrat.signForm(*this);
         }
             
         else
@@ -75,6 +75,29 @@ void AForm::beSigned(Bureaucrat & bureaucrat) {
     }
     catch (TooLowExeptionError& e){
         std::cout << e.what() << std::endl;
-    }
+    }    
+}
+
+bool AForm::execute(Bureaucrat const & executor) const {
     
+    try {
+        if (!IsSigned)
+            throw NotSignedExeptionError();
+        else if (executor.GetGrade() > gradeExec)
+            throw TooLowExeptionError();
+        else
+        {
+            do_exec();
+            return true;
+        }
+
+    }
+    catch (TooLowExeptionError& e){
+        std::cout << e.what() << std::endl;
+    }
+
+    catch (NotSignedExeptionError& e){
+        std::cout << e.what() << std::endl;
+    }
+    return false;
 }

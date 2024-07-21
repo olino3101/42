@@ -1,17 +1,17 @@
 #include "ShrubberyCreationForm.hpp"
 
 ShrubberyCreationForm::ShrubberyCreationForm(std::string initCible)
-    : gradeExec(137), gradeMin(147), name("formulaire de création d’arbustes"), cible(initCible) {
+    : AForm("formulaire de creation darbustes", 137, 145), cible(initCible) {
     std::cout << "default constructor called" << std::endl;
 }
 
 ShrubberyCreationForm::ShrubberyCreationForm() 
-    : gradeExec(137), gradeMin(147), name("formulaire de création d’arbustes"), cible("default"){
+    : AForm("formulaire de creation darbustes", 137, 145), cible("default"){
     std::cout << "default constructor called" << std::endl;
 }
 
 ShrubberyCreationForm::ShrubberyCreationForm(const ShrubberyCreationForm& other) : 
-    name(other.name), IsSigned(other.IsSigned), gradeExec(other.gradeExec), gradeMin(other.gradeMin) {
+    AForm("formulaire de creation darbustes", 137, 145), cible(other.cible) {
     std::cout << "copy constructor called" << std::endl;
 }
 
@@ -22,8 +22,21 @@ ShrubberyCreationForm::~ShrubberyCreationForm() {
 ShrubberyCreationForm& ShrubberyCreationForm::operator=(const ShrubberyCreationForm& other) {
     if (this != &other)
     {
+        this->cible = other.cible;
         return *this;
-        //IsSigned = other.IsSigned;
     }
     return *this;
+}
+void ShrubberyCreationForm::do_exec() const{
+    std::ofstream outFile(this->getName());
+    if (!outFile) {
+        std::cout << "error opening file" << std::endl;
+        return ;
+    }
+    outFile << "   /\\\n"
+            << "  /  \\\n"
+            << " /____\\\n"
+            << "   ||\n"
+            << "   ||\n";
+    outFile.close();
 }

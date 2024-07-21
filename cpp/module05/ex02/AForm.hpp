@@ -1,8 +1,9 @@
-#ifndef FORM_HPP
-#define  FORM_HPP
+#ifndef AFORM_HPP
+#define  AFORM_HPP
 
 #include <iostream>
 #include "Bureaucrat.hpp"
+#include <fstream>
 
 class Bureaucrat;
 
@@ -13,7 +14,17 @@ class AForm
     bool IsSigned = false;
     const int gradeMin;
     const int gradeExec;
+    protected:
+        virtual void do_exec() const = 0;
     public:
+
+    class NotSignedExeptionError : public std::exception
+    {
+        public:
+            virtual const char* what() const throw () {
+                return "Form::NotSignedExeptionError";
+            }
+    };
 
     class TooLowExeptionError : public std::exception
     {
@@ -33,13 +44,14 @@ class AForm
 
     AForm();
     AForm(std::string InitName, int InitGradeMin, int InitGradeExec);
-    AForm(const Form& other);
+    AForm(const AForm& other);
+    bool execute(Bureaucrat const & executor) const;
     virtual ~AForm();
     bool getIsSigned() const ;
     int getGradeMin() const ;
     int getGradeExec() const ;
     std::string getName() const;
-    virtual Form& operator=(const AForm& other);
+    virtual AForm& operator=(const AForm& other);
     void beSigned(Bureaucrat & bureaucrat);
 };
 

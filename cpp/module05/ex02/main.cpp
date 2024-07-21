@@ -1,9 +1,31 @@
 #include "Bureaucrat.hpp"
+#include "AForm.hpp"
+#include "ShrubberyCreationForm.hpp"
+#include "PresidentialPardonForm.hpp"
+#include "RobotomyRequestForm.hpp"
 
 int main()
 {
-    Form form("1", 5, 5);
+// test shruberry
     Bureaucrat yes("YESSUR", 150);
-    Bureaucrat yesss("YESSSSUR", 100);
-    form.beSigned(yesss);
+    ShrubberyCreationForm garden("garden");
+    yes.executeForm(garden);
+    garden.beSigned(yes);
+
+    //Bureaucrat yes("YESSUR", 100;
+    //ShrubberyCreationForm garden("garden");
+    //garden.beSigned(yes);
+    //yes.executeForm(garden);
+
+//test presidential form
+    //Bureaucrat mr("mr", 1);
+    //PresidentialPardonForm pardonForm("target");
+    //pardonForm.beSigned(mr);
+    //mr.executeForm(pardonForm);
+
+//test Robotomy
+    //Bureaucrat mr("mr", 1);
+    //RobotomyRequestForm robotomyForm("target");
+    //robotomyForm.beSigned(mr);
+    //mr.executeForm(robotomyForm);
 }

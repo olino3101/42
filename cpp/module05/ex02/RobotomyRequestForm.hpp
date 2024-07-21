@@ -3,4 +3,17 @@
 
 #include "AForm.hpp"
 
+class RobotomyRequestForm : public AForm
+{
+    public:
+    RobotomyRequestForm();
+    RobotomyRequestForm(std::string cible);
+    RobotomyRequestForm(const RobotomyRequestForm& other);
+    ~RobotomyRequestForm();
+    RobotomyRequestForm& operator=(const RobotomyRequestForm& other);
+    void do_exec() const override;
+    private:
+    std::string cible;
+};
+
 #endif
