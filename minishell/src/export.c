@@ -6,11 +6,11 @@
 /*   By: onault <onault@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 14:14:02 by fcornill          #+#    #+#             */
-/*   Updated: 2024/07/10 17:45:56 by onault           ###   ########.fr       */
+/*   Updated: 2024/07/15 13:40:02 by onault           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "minishell.h"
 
 //Modifie une variable deja existante
 void find_equal(char *str, int *equal_pos)
@@ -20,7 +20,7 @@ void find_equal(char *str, int *equal_pos)
     i = 0;
     while (str[i])
     {
-        if (str[i] = '=')
+        if (str[i] == '=')
         {
             *equal_pos = i;
             return ;
@@ -88,7 +88,6 @@ void	ft_export_add(char *argv, char **env_cpy)
 	ft_free(env_cpy , NULL);
 	env_cpy = new_env;
 }
-
 //Cherche dans l'environement si la variable existe. Si non, la creer
 void	ft_export_search(char *argv, char **env_cpy)
 {

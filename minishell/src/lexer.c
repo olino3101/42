@@ -3,59 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fcornill <fcornill@student.42.fr>          +#+  +:+       +#+        */
+/*   By: onault <onault@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 11:38:48 by fcornill          #+#    #+#             */
-/*   Updated: 2024/07/09 11:59:26 by fcornill         ###   ########.fr       */
+/*   Updated: 2024/07/15 13:40:03 by onault           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
-int	ft_check_quote(char *str)
-{
-    while (*str)
-    { 
-        if (*str == '\"')
-        {
-            str++;
-            while (*str && *str != '\"')
-                str++;
-            if (*str != '\"') {
-                ft_printf("Missing closing quote\n");
-                return (0);
-            }
-        }
-        else if (*str == '\'')
-        {
-            str++;
-            while (*str && *str != '\'')
-                str++;
-            if (*str != '\'') {
-                ft_printf("Missing closing quote\n");
-                return (0);
-            }
-        }
-        str++;
-    }
-    ft_printf("ok quote\n");
-    return (1);
-}
-
-void search_quotation(char **s, char *end)
+static void search_quotation(char **s, char *end)
 {
 	if (**s == '\'' || **s == '\"')
 	{
 		(*s)++;
-		while (s < end && **s != '\'' && **s != '\"') // chercher la fin de la citation
+		while (*s < end && **s != '\'' && **s != '\"') // chercher la fin de la citation
             (*s)++;
         if (*s < end && (**s == '\'' || **s == '\"')) // si la fin de la citation est trouvée
             (*s)++;
 	}
 }
 
-bool blabla(char **s, char *ret, char chr)
+static bool redirection_operator_process(char **s, int *ret, char chr)
 {
 	if (**s == chr)
 	{
@@ -72,15 +41,17 @@ bool blabla(char **s, char *ret, char chr)
 	}
 	return (false);
 }
-void redirection_operator(char **s, int *ret, char *end, char *sep)
+
+
+static void redirection_operator(char **s, int *ret, char *end, char *sep)
 {
-	if (*s == '|')
+	if (**s == '|')
 		s++;
-	else if (blabla(s, ret, '>') || blabla(s, ret, '<'))
+	else if (redirection_operator_process(s, ret, '>') || redirection_operator_process(s, ret, '<'))
 		return ;
 	else
 	{
-		ret = 'a';
+		*ret = 'a';
 		while (*s < end && !ft_strchr(" \n\t", **s) && !ft_strchr(sep, **s))
 			(*s)++;
 	}

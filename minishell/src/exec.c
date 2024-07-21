@@ -3,28 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msimard <msimard@student.42quebec.com>     +#+  +:+       +#+        */
+/*   By: onault <onault@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 14:03:55 by msimard           #+#    #+#             */
-/*   Updated: 2024/06/27 16:20:10 by msimard          ###   ########.fr       */
+/*   Updated: 2024/07/15 13:40:01 by onault           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "minishell.h"
 
 //Fonction qui verifie le type de la commande (Built-in ou executable)
 void	ft_check_cmd(t_data *data)
 {
 	if ((pipe(data->fd)) == -1)
 		ft_error("Error with pipe");
-	else if (ft_strncmp(data->input, "env", 3) == 0)
+	else if (ft_strncmp(data->args[0], "env", 4) == 0)
 		ft_env_cmd(data->envp);
-	else if (ft_strncmp(data->input, "export", 6) == 0)
+	else if (ft_strncmp(data->args[0], "export", 7) == 0)
 		ft_export_cmd(data);
-	else if (ft_strncmp(data->input, "cd", 2) == 0)
+	else if (ft_strncmp(data->args[0], "cd", 3) == 0)
 		ft_chdir((data->input) + 3);
-	else if (ft_strncmp(data->input, "exit", 4) == 0)
+	else if (ft_strncmp(data->args[0], "exit", 5) == 0)
 		ft_exit_cmd(data);
+	else if (ft_strncmp(data->input, "unset", 6) == 0)
+		ft_cmd_unset(data);
 	else
 		ft_execute(data->input, data->envp, data);
 }
@@ -35,7 +37,9 @@ void	ft_execute(char *commands, char **envp, t_data *data)
 	char	**cmd_list;
 	char	*cmd_path;
 
-	cmd_list = ft_split(commands, ' ');
+	//cmd_list = ft_split(commands, ' ');
+	(void)commands;
+	cmd_list = data->args;
 	cmd_path = ft_search_path(cmd_list[0], envp);
 	if (!cmd_path)
 		ft_isbuilt(cmd_list);
