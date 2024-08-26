@@ -1,4 +1,33 @@
-#include "convert.hpp"
+    #include "convert.hpp"
+    #include <sstream>
+
+    int stoi(std::string str) {
+        std::stringstream ss(str);
+        long num;
+        ss >> num;
+        if (ss.fail() || num > std::numeric_limits<int>::max() || num < std::numeric_limits<int>::min())
+            throw std::invalid_argument("fails converting s to int");
+        return num;
+    }
+
+    double stod(std::string str) {
+        std::stringstream ss(str);
+        long double num;
+        ss >> num;
+        if (ss.fail() || num > std::numeric_limits<double>::max() || num < std::numeric_limits<double>::min())
+            throw std::invalid_argument("fails converting s to double");
+        return num;
+    }
+
+    float stof(std::string str) {
+        std::stringstream ss(str);
+        double num;
+        ss >> num;
+        if (ss.fail() || num > std::numeric_limits<float>::max() || num < std::numeric_limits<float>::min())
+            throw std::invalid_argument("fails converting s to double");
+        return num;
+    }
+    
 
     Conv::~Conv() {}
 
@@ -17,10 +46,10 @@
 
     static bool isFloat(std::string str) {
         try {
-            std::stof(str);
             if (str == "nanf" || str == "-inff" || str == "+inff")
                 return true;
-            return (str.find('.') != std::string::npos && str.back() == 'f');
+            stof(str);
+            return (str.find('.') != std::string::npos && str[str.size() - 1] == 'f');
         }
         catch (std::exception &e){
             return false;
@@ -34,8 +63,32 @@
             return 0;
         return str.length() - pos - 2;
     }
+
+    static void printEx(std::string str, char c) {
+        std::cout << "impossible" << std::endl;
+        std::cout << "impossible" << std::endl;
+        if (c == 'f')
+        {
+            std::cout << "float " << str << std::endl;
+            std::cout << "double "<< str.substr(0, str.length() - 1) << std::endl;
+        }
+        else if (c == 'd')
+        {
+            std::cout << "float " << str << "f" << std::endl;
+            std::cout << "double "<< str << std::endl;
+        }
+    }
+    
     static void printFloat(std::string str) {
-        float f = stof(str);
+        
+        float f;
+        try {
+            f = stof(str);
+        }
+        catch (std::exception &e) {
+            printEx(str, 'f');
+            return ;
+        }
         long long i = static_cast<long long>(f);
         if (f > 31 && f < 127)
             std::cout << static_cast<char>(f) << std::endl;
@@ -51,9 +104,9 @@
 
     static int isDouble(std::string str) {
         try {
-            std::stod(str);
             if (str == "nan" || str == "-inf" || str == "+inf")
                 return true;
+            stod(str);
             return (str.find('.') != std::string::npos);
         }
         catch (std::exception &e){
@@ -63,7 +116,14 @@
 
     static void printDouble(std::string str)
     {
-        double d = stod(str);
+        double d;
+        try {
+            d = stod(str);
+        }
+        catch (std::exception &e) {
+            printEx(str, 'd');
+            return ;
+        }
         long long i = static_cast<long long>(d);
         if (d > 31 && d < 127)
             std::cout << static_cast<char>(d) << std::endl;
@@ -79,7 +139,7 @@
     static bool isInt(std::string str) {
         try
         {
-            std::stoi(str);
+            stoi(str);
             return true;
         }
         catch (std::exception &e)
@@ -128,5 +188,4 @@
             printChar(str);
         else
             wrongInput();
-
     }

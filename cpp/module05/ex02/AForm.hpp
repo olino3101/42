@@ -11,9 +11,9 @@ class AForm
 {
     private:
     const std::string name;
-    bool IsSigned = false;
     const int gradeMin;
     const int gradeExec;
+    bool IsSigned;
     protected:
         virtual void do_exec() const = 0;
     public:

@@ -3,5 +3,5 @@
 #include <iostream>
 
 struct Data {
-    int value = 10;
+    int value;
 };

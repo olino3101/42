@@ -1,5 +1,6 @@
 #include "RobotomyRequestForm.hpp"
-#include <random>
+#include <cstdlib>
+#include <ctime>
 
 RobotomyRequestForm::RobotomyRequestForm(std::string initCible)
     : AForm("Robotomy Request Form", 45, 72), cible(initCible) {
@@ -29,11 +30,9 @@ RobotomyRequestForm& RobotomyRequestForm::operator=(const RobotomyRequestForm& o
     return *this;
 }
 void RobotomyRequestForm::do_exec() const{
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dis(1, 100);
+    std::srand(static_cast<unsigned int>(std::time(0)));
+    int rn = std::rand() % 100 + 1;
 
-    int rn = dis(gen);
     std::cout << cible << "mzzzz mzzzz (bruit de perceuse)" << std::endl;
     if (rn > 50)
         std::cout << "operation fails" << std::endl;

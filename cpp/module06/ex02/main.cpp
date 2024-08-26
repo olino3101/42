@@ -1,15 +1,16 @@
 #include "A.hpp"
 #include "B.hpp"
 #include "C.hpp"
-#include <random>
-#include <type_traits>
+#include <cstdlib>
+#include <ctime>
 
 Base * generate(void) {
     Base *base;
-    std::random_device rd;
-    std::mt19937 gen(rd());
-    std::uniform_int_distribution<> dis(1, 3);
-    int random = dis(gen);
+    struct timeb timeStruct;
+    ftime(&timeStruct);
+    unsigned int seed = static_cast<unsigned int>(timeStruct.time) + timeStruct.millitm;
+    std::srand(seed);
+    int random = std::rand() % 3 + 1;
     switch (random) {
         case 1:
             base = new A;

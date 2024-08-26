@@ -4,6 +4,8 @@
 #include "PresidentialPardonForm.hpp"
 #include "RobotomyRequestForm.hpp"
 
+#include <iostream>
+
 int main()
 {
 // test shruberry
@@ -11,11 +13,10 @@ int main()
     ShrubberyCreationForm garden("garden");
     yes.executeForm(garden);
     garden.beSigned(yes);
-
-    //Bureaucrat yes("YESSUR", 100;
-    //ShrubberyCreationForm garden("garden");
-    //garden.beSigned(yes);
-    //yes.executeForm(garden);
+    // Bureaucrat yes("YESSUR", 100);
+    // ShrubberyCreationForm garden("garden");
+    // garden.beSigned(yes);
+    // yes.executeForm(garden);
 
 //test presidential form
     //Bureaucrat mr("mr", 1);

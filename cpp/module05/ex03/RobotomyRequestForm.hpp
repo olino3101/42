@@ -11,7 +11,7 @@ class RobotomyRequestForm : public AForm
     RobotomyRequestForm(const RobotomyRequestForm& other);
     ~RobotomyRequestForm();
     RobotomyRequestForm& operator=(const RobotomyRequestForm& other);
-    void do_exec() const override;
+    void do_exec() const;
     private:
     std::string cible;
 };

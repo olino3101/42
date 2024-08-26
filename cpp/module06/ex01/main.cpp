@@ -13,6 +13,7 @@ Data* deserialize(uintptr_t raw) {
 int main()
 {
     Data data;
+    data.value = 10;
     Data *newdata = deserialize(serialize(&data));
 
     std::cout << &data << std::endl;

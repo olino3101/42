@@ -10,9 +10,9 @@ class Form
 {
     private:
     const std::string name;
-    bool IsSigned = false;
     const int gradeMin;
     const int gradeExec;
+    bool IsSigned;
     public:
 
     class TooLowExeptionError : public std::exception

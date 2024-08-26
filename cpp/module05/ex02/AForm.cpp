@@ -1,7 +1,7 @@
 #include "AForm.hpp"
 
 AForm::AForm(std::string InitName, int InitGradeMin, int InitGradeExec) 
-    : name(InitName), gradeMin(InitGradeMin), gradeExec(InitGradeExec) {
+    : name(InitName), gradeMin(InitGradeMin), gradeExec(InitGradeExec), IsSigned(false) {
     std::cout << "value constructor called" << std::endl;
     try {
         if (InitGradeMin < 1 || InitGradeExec < 1)
@@ -19,12 +19,12 @@ AForm::AForm(std::string InitName, int InitGradeMin, int InitGradeExec)
     }
 }
 
-AForm::AForm() : gradeExec(150), gradeMin(150), name("default") {
+AForm::AForm() : name("default"), gradeMin(150), gradeExec(150), IsSigned(false) {
     std::cout << "default constructor called" << std::endl;
 }
 
 AForm::AForm(const AForm& other) : 
-    name(other.name), IsSigned(other.IsSigned), gradeExec(other.gradeExec), gradeMin(other.gradeMin) {
+    name(other.name), gradeMin(other.gradeMin), gradeExec(other.gradeExec), IsSigned(other.IsSigned) {
     std::cout << "copy constructor called" << std::endl;
 }
   

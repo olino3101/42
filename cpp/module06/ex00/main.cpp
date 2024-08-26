@@ -8,7 +8,7 @@ int main()
    std::string test4 = "42.0f";
    std::string test5 = "4245645656.0f";
    std::string test6 = "-451";
-   std::string test7 = "nanf";
+   std::string test7 = "nan";
    std::string test8 = "-inff";
 
     Conv conv(test1);

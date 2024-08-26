@@ -12,6 +12,6 @@ int main()
     delete rrf;
 
     AForm* rrf2;
-    rrf = someRandomIntern.makeForm("Form that does not exist", "Bender");
+    rrf2 = someRandomIntern.makeForm("Form that does not exist", "Bender");
     delete rrf2;
 }
