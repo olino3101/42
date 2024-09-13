@@ -3,20 +3,10 @@
 AForm::AForm(std::string InitName, int InitGradeMin, int InitGradeExec) 
     : name(InitName), gradeMin(InitGradeMin), gradeExec(InitGradeExec), IsSigned(false) {
     std::cout << "value constructor called" << std::endl;
-    try {
         if (InitGradeMin < 1 || InitGradeExec < 1)
             throw TooHighExeptionError();
-    }
-    catch (TooHighExeptionError& e) {
-        std::cout << e.what() << std::endl;
-    }
-    try {
         if (InitGradeMin > 150 || InitGradeExec > 150)
             throw TooLowExeptionError();
-    }
-    catch (TooLowExeptionError& e) {
-        std::cout << e.what() << std::endl;
-    }
 }
 
 AForm::AForm() : name("default"), gradeMin(150), gradeExec(150), IsSigned(false) {
@@ -63,24 +53,16 @@ std::ostream& operator<<(std::ostream& os, const AForm  & rhs) {
 }
 
 void AForm::beSigned(Bureaucrat & bureaucrat) {
-    try {
         if (bureaucrat.GetGrade() <= gradeMin)
         {
             IsSigned = true;
             bureaucrat.signForm(*this);
-        }
-            
+        }     
         else
             throw TooLowExeptionError();
-    }
-    catch (TooLowExeptionError& e){
-        std::cout << e.what() << std::endl;
-    }    
 }
 
 bool AForm::execute(Bureaucrat const & executor) const {
-    
-    try {
         if (!IsSigned)
             throw NotSignedExeptionError();
         else if (executor.GetGrade() > gradeExec)
@@ -90,14 +72,5 @@ bool AForm::execute(Bureaucrat const & executor) const {
             do_exec();
             return true;
         }
-
-    }
-    catch (TooLowExeptionError& e){
-        std::cout << e.what() << std::endl;
-    }
-
-    catch (NotSignedExeptionError& e){
-        std::cout << e.what() << std::endl;
-    }
     return false;
 }

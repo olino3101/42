@@ -6,12 +6,9 @@
 
 Base * generate(void) {
     Base *base;
-    struct timeb timeStruct;
-    ftime(&timeStruct);
-    unsigned int seed = static_cast<unsigned int>(timeStruct.time) + timeStruct.millitm;
-    std::srand(seed);
-    int random = std::rand() % 3 + 1;
-    switch (random) {
+    std::srand(static_cast<unsigned int>(std::time(0)));
+    int rn = std::rand() % 3 + 1;
+    switch (rn) {
         case 1:
             base = new A;
             break;
@@ -43,17 +40,17 @@ void identify(Base& p) {
         {
             if (i == 0)
             {
-                dynamic_cast<A &>(p);
+                (void)dynamic_cast<A &>(p);
                     std::cout << "Class A" << std::endl;
             }
             else if (i == 1)
             {
-                dynamic_cast<B &>(p);
+                (void)dynamic_cast<B &>(p);
                 std::cout << "Class B" << std::endl;
             }
             else if (i == 2)
             {
-                dynamic_cast<C &>(p);
+                (void)dynamic_cast<C &>(p);
                 std::cout << "Class C" << std::endl;
             }
         }

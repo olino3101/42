@@ -1,5 +1,5 @@
 CXX = c++
-FLAGS = -std=c++98 -Wall -Wextra -Werror
+FLAGS = -std=c++98 -Wall -Wextra
 SRC = main.cpp
 OBJ = $(SRC:.cpp=.o)
 NAME = ex02

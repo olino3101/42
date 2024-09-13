@@ -6,12 +6,25 @@
 #include "Intern.hpp"
 int main()
 {
-    Intern someRandomIntern;
-    AForm* rrf;
-    rrf = someRandomIntern.makeForm("Robotomy Request", "Bender");
-    delete rrf;
-
-    AForm* rrf2;
-    rrf2 = someRandomIntern.makeForm("Form that does not exist", "Bender");
-    delete rrf2;
+	try {
+		Intern someRandomIntern;
+    	AForm* rrf;
+    	rrf = someRandomIntern.makeForm("Robotomy Request", "Bender");
+    	delete rrf;
+	}
+    
+	catch (std::exception & e)
+	{
+		std::cout << e.what() << std::endl;
+	}
+	try {
+		Intern someRandomIntern;
+		AForm* rrf2;
+    	rrf2 = someRandomIntern.makeForm("Form that does not exist", "Bender");
+    	delete rrf2;
+	}
+	catch (std::exception & e)
+	{
+		std::cout << e.what() << std::endl;
+	}
 }

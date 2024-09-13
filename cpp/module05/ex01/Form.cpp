@@ -3,20 +3,10 @@
 Form::Form(std::string InitName, int InitGradeMin, int InitGradeExec) 
     : name(InitName), gradeMin(InitGradeMin), gradeExec(InitGradeExec), IsSigned(false) {
     std::cout << "value constructor called" << std::endl;
-    try {
         if (InitGradeMin < 1 || InitGradeExec < 1)
             throw TooHighExeptionError();
-    }
-    catch (TooHighExeptionError& e) {
-        std::cout << e.what() << std::endl;
-    }
-    try {
         if (InitGradeMin > 150 || InitGradeExec > 150)
             throw TooLowExeptionError();
-    }
-    catch (TooLowExeptionError& e) {
-        std::cout << e.what() << std::endl;
-    }
 }
 
 Form::Form() : name("default"), gradeMin(150), gradeExec(150), IsSigned(false) {
@@ -63,7 +53,6 @@ std::ostream& operator<<(std::ostream& os, const Form  & rhs) {
 }
 
 void Form::beSigned(Bureaucrat & bureaucrat) {
-    try {
         if (bureaucrat.GetGrade() <= gradeMin)
         {
             IsSigned = true;
@@ -72,9 +61,5 @@ void Form::beSigned(Bureaucrat & bureaucrat) {
             
         else
             throw TooLowExeptionError();
-    }
-    catch (TooLowExeptionError& e){
-        std::cout << e.what() << std::endl;
-    }
     
 }

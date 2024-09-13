@@ -15,27 +15,15 @@ int  Bureaucrat::GetGrade() const {
 
 void Bureaucrat::UpGrade()
 {
-    try {
         if (grade == 1)
-            throw TooLowExeptionError();
-    }
-    catch (TooLowExeptionError& e)
-    {
-        std::cout << e.what() << std::endl;
-    }
+            throw TooHighExeptionError();
     this->grade--;
 }
 
 void Bureaucrat::DownGrade()
 {
-    try {
         if (grade == 150)
-            throw TooHighExeptionError();
-    }
-    catch (TooHighExeptionError& e)
-    {
-        std::cout << e.what() << std::endl;
-    }
+            throw TooLowExeptionError();
     this->grade++;
 }
 
@@ -44,22 +32,12 @@ Bureaucrat::Bureaucrat() : name("default"), grade(150) {
 }
 
 Bureaucrat::Bureaucrat(std::string InitName, int InitGrade) : name(InitName), grade(InitGrade) {
-    std::cout << "value constructor called" << std::endl;
-    try {
+   
         if (InitGrade < 1)
             throw TooHighExeptionError();
-    }
-    catch (TooHighExeptionError& e) {
-        std::cout << e.what() << std::endl;
-    }
-    try {
         if (InitGrade > 150)
             throw TooLowExeptionError();
-    }
-    catch (TooLowExeptionError& e) {
-        std::cout << e.what() << std::endl;
-    }
-
+		 std::cout << "value constructor called" << std::endl;
 }
 
 Bureaucrat::Bureaucrat(const Bureaucrat& other) {

@@ -1,7 +1,7 @@
     #include "convert.hpp"
     #include <sstream>
 
-    int stoi(std::string str) {
+    int f_stoi(std::string str) {
         std::stringstream ss(str);
         long num;
         ss >> num;
@@ -10,7 +10,7 @@
         return num;
     }
 
-    double stod(std::string str) {
+    double f_stod(std::string str) {
         std::stringstream ss(str);
         long double num;
         ss >> num;
@@ -19,7 +19,7 @@
         return num;
     }
 
-    float stof(std::string str) {
+    float f_stof(std::string str) {
         std::stringstream ss(str);
         double num;
         ss >> num;
@@ -48,7 +48,7 @@
         try {
             if (str == "nanf" || str == "-inff" || str == "+inff")
                 return true;
-            stof(str);
+            f_stof(str);
             return (str.find('.') != std::string::npos && str[str.size() - 1] == 'f');
         }
         catch (std::exception &e){
@@ -83,7 +83,7 @@
         
         float f;
         try {
-            f = stof(str);
+            f = f_stof(str);
         }
         catch (std::exception &e) {
             printEx(str, 'f');
@@ -106,7 +106,7 @@
         try {
             if (str == "nan" || str == "-inf" || str == "+inf")
                 return true;
-            stod(str);
+            f_stod(str);
             return (str.find('.') != std::string::npos);
         }
         catch (std::exception &e){
@@ -118,7 +118,7 @@
     {
         double d;
         try {
-            d = stod(str);
+            d = f_stod(str);
         }
         catch (std::exception &e) {
             printEx(str, 'd');
@@ -139,7 +139,7 @@
     static bool isInt(std::string str) {
         try
         {
-            stoi(str);
+            f_stoi(str);
             return true;
         }
         catch (std::exception &e)
@@ -149,7 +149,7 @@
     }
 
     static void printInt(std::string str) {
-        int i = stoi(str);
+        int i = f_stoi(str);
         if (i > 31 && i < 127)
             std::cout << static_cast<char>(i) << std::endl;
         else
