@@ -9,7 +9,7 @@ int main()
 	try {
 		Intern someRandomIntern;
     	AForm* rrf;
-    	rrf = someRandomIntern.makeForm("Robotomy Request", "Bender");
+    	rrf = someRandomIntern.makeForm("sdfsd", "Bender");
     	delete rrf;
 	}
     
@@ -20,7 +20,7 @@ int main()
 	try {
 		Intern someRandomIntern;
 		AForm* rrf2;
-    	rrf2 = someRandomIntern.makeForm("Form that does not exist", "Bender");
+    	rrf2 = someRandomIntern.makeForm("Form that does not exist", "sdf");
     	delete rrf2;
 	}
 	catch (std::exception & e)

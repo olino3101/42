@@ -62,15 +62,3 @@ void AForm::beSigned(Bureaucrat & bureaucrat) {
             throw TooLowExeptionError();
 }
 
-bool AForm::execute(Bureaucrat const & executor) const {
-        if (!IsSigned)
-            throw NotSignedExeptionError();
-        else if (executor.GetGrade() > gradeExec)
-            throw TooLowExeptionError();
-        else
-        {
-            do_exec();
-            return true;
-        }
-    return false;
-}

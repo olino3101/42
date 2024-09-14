@@ -14,8 +14,6 @@ class AForm
     const int gradeMin;
     const int gradeExec;
     bool IsSigned;
-    protected:
-        virtual void do_exec() const = 0;
     public:
 
     class NotSignedExeptionError : public std::exception
@@ -45,7 +43,7 @@ class AForm
     AForm();
     AForm(std::string InitName, int InitGradeMin, int InitGradeExec);
     AForm(const AForm& other);
-    bool execute(Bureaucrat const & executor) const;
+    virtual bool execute(Bureaucrat const & executor) const = 0;
     virtual ~AForm();
     bool getIsSigned() const ;
     int getGradeMin() const ;

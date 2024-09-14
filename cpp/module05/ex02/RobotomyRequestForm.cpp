@@ -29,13 +29,22 @@ RobotomyRequestForm& RobotomyRequestForm::operator=(const RobotomyRequestForm& o
     }
     return *this;
 }
-void RobotomyRequestForm::do_exec() const{
-    std::srand(static_cast<unsigned int>(std::time(0)));
-    int rn = std::rand() % 100 + 1;
 
-    std::cout << cible << "mzzzz mzzzz (bruit de perceuse)" << std::endl;
-    if (rn > 50)
-        std::cout << "operation fails" << std::endl;
+bool RobotomyRequestForm::execute(Bureaucrat const & executor) const {
+    if (!getIsSigned())
+        throw NotSignedExeptionError();
+    else if (executor.GetGrade() > getGradeExec())
+        throw TooLowExeptionError();
     else
-        std::cout << "operation success" << std::endl;
+    {
+        std::srand(static_cast<unsigned int>(std::time(0)));
+        int rn = std::rand() % 100 + 1;
+        std::cout << cible << "mzzzz mzzzz (bruit de perceuse)" << std::endl;
+        if (rn > 50)
+            std::cout << "operation fails" << std::endl;
+        else
+            std::cout << "operation success" << std::endl;
+        return true;
+    }
+    return false;
 }

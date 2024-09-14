@@ -28,6 +28,16 @@ PresidentialPardonForm& PresidentialPardonForm::operator=(const PresidentialPard
     }
     return *this;
 }
-void PresidentialPardonForm::do_exec() const{
-    std::cout << cible << " have been forgive by Zaphod Beeblebrox" << std::endl;
+
+bool PresidentialPardonForm::execute(Bureaucrat const & executor) const {
+    if (!getIsSigned())
+        throw NotSignedExeptionError();
+    else if (executor.GetGrade() > getGradeExec())
+        throw TooLowExeptionError();
+    else
+    {
+        std::cout << cible << " have been forgive by Zaphod Beeblebrox" << std::endl;
+        return true;
+    }
+    return false;
 }

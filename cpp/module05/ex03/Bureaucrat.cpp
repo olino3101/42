@@ -28,7 +28,6 @@ void Bureaucrat::DownGrade()
 }
 
 Bureaucrat::Bureaucrat() : name("default"), grade(150) {
-    std::cout << "default constructor called" << std::endl;
 }
 
 Bureaucrat::Bureaucrat(std::string InitName, int InitGrade) : name(InitName), grade(InitGrade) {
@@ -37,16 +36,13 @@ Bureaucrat::Bureaucrat(std::string InitName, int InitGrade) : name(InitName), gr
             throw TooHighExeptionError();
         if (InitGrade > 150)
             throw TooLowExeptionError();
-		 std::cout << "value constructor called" << std::endl;
 }
 
 Bureaucrat::Bureaucrat(const Bureaucrat& other) {
-    std::cout << "copy constructor called" << std::endl;
     this->grade = other.grade;
 }
 
 Bureaucrat::~Bureaucrat() {
-    std::cout << "destructor called" << std::endl;
 }
 
 Bureaucrat& Bureaucrat::operator=(const Bureaucrat& other) {

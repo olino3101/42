@@ -21,7 +21,6 @@ AForm* Intern::makeForm(std::string name, std::string cible) {
         std::cout << "error empty string" << std::endl;
         return NULL; 
     }
-    //AForm *form;
     int i = 0;
     AForm* (Intern::*Ptrs[])(std::string cible) = {&Intern::ShrubberyCreation, &Intern::RobotomyRequest, &Intern::PresidentialPardon};
     std::string forms[] = {"Presidential Pardon", "Robotomy Request", "Shrubbery Creation"};
@@ -41,7 +40,6 @@ Intern::Intern(const Intern& other) {
 }
 
 Intern::~Intern() {
-    std::cout << "destructor called" << std::endl;
 }
 
 Intern& Intern::operator=(const Intern& other) {

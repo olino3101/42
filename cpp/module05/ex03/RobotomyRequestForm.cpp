@@ -4,21 +4,17 @@
 
 RobotomyRequestForm::RobotomyRequestForm(std::string initCible)
     : AForm("Robotomy Request Form", 45, 72), cible(initCible) {
-    std::cout << "default constructor called" << std::endl;
 }
 
 RobotomyRequestForm::RobotomyRequestForm() 
     : AForm("Robotomy Request Form", 45, 72), cible("default"){
-    std::cout << "default constructor called" << std::endl;
 }
 
 RobotomyRequestForm::RobotomyRequestForm(const RobotomyRequestForm& other) : 
     AForm("Robotomy Request Form", 45, 72), cible(other.cible) {
-    std::cout << "copy constructor called" << std::endl;
 }
 
 RobotomyRequestForm::~RobotomyRequestForm() {
-    std::cout << "destructor called" << std::endl;
 }
 
 RobotomyRequestForm& RobotomyRequestForm::operator=(const RobotomyRequestForm& other) {
@@ -29,13 +25,22 @@ RobotomyRequestForm& RobotomyRequestForm::operator=(const RobotomyRequestForm& o
     }
     return *this;
 }
-void RobotomyRequestForm::do_exec() const{
-    std::srand(static_cast<unsigned int>(std::time(0)));
-    int rn = std::rand() % 100 + 1;
 
-    std::cout << cible << "mzzzz mzzzz (bruit de perceuse)" << std::endl;
-    if (rn > 50)
-        std::cout << "operation fails" << std::endl;
+bool RobotomyRequestForm::execute(Bureaucrat const & executor) const {
+    if (!getIsSigned())
+        throw NotSignedExeptionError();
+    else if (executor.GetGrade() > getGradeExec())
+        throw TooLowExeptionError();
     else
-        std::cout << "operation success" << std::endl;
+    {
+        std::srand(static_cast<unsigned int>(std::time(0)));
+        int rn = std::rand() % 100 + 1;
+        std::cout << cible << "mzzzz mzzzz (bruit de perceuse)" << std::endl;
+        if (rn > 50)
+            std::cout << "operation fails" << std::endl;
+        else
+            std::cout << "operation success" << std::endl;
+        return true;
+    }
+    return false;
 }
