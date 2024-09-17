@@ -1,66 +1,45 @@
-#include <MLX42/MLX42.h>
+#include "cub3d.h"
 
-int main()
+void drawPlayer(t_data *data) {
+    for (int i = 0 ; i < HEIGHT; i++) {
+        for (int j = 0;j < WIDTH; j++) {
+        if (data->px >= i - 4 && data->px <= i + 4 && data->py >= j - 4 && data->py <= j + 4 )
+            mlx_put_pixel(data->img, i, j, 0x00FFFFFF); 
+        else
+            mlx_put_pixel(data->img, i, j, 0xFFFF00); }}
+}
+
+void input(void *param)
 {
-    return 0;
+    t_data *data = (t_data *)param;
+
+    if (mlx_is_key_down(data->mlx, MLX_KEY_ESCAPE))
+		mlx_close_window(data->mlx);
+    if (mlx_is_key_down(data->mlx, MLX_KEY_W))
+        data->py += 5;
+    if (mlx_is_key_down(data->mlx, MLX_KEY_S))
+        data->py -= 5;
+    if (mlx_is_key_down(data->mlx, MLX_KEY_D))
+        data->px += 5;
+    if (mlx_is_key_down(data->mlx, MLX_KEY_A))
+        data->px -= 5;
+    drawPlayer(data);
 }
 
 
-// CXX := gcc
-// CXXFLAGS := -std=c++98 -Wall -Wextra -Werror
-
-// # Colors
-// COLOR_RESET := \033[0m
-// COLOR_CXX := \033[1;34m
-// COLOR_OK := \033[1;32m
-// COLOR_ERROR := \033[1;31m
-// COLOR_CLEAN := \033[1;36m
-// COLOR_RE := \033[1;35m
-// COLOR_MSG := \033[1;35m
-
-// # Source and output
-// SRCS := main.cpp
-// OBJS := $(SRCS:.cpp=.o)
-// TARGET := cub3d
-
-// # Program name
-// PROGRAM_NAME := cub3d
-
-// # Custom message with fancy border
-// MESSAGE := "$(COLOR_MSG)╭───────────────────────────────╮\n│ 🌟 $(PROGRAM_NAME) Built Successfully 🌟 │\n╰───────────────────────────────╯$(COLOR_RESET)"
-
-// # Rules
-// all: $(TARGET)
-
-// $(TARGET): $(OBJS)
-// 	@echo -e "$(COLOR_CXX)Linking $@...$(COLOR_RESET)"
-// 	@$(CXX) $(CXXFLAGS) -o $@ $(OBJS)
-// 	@echo -e "$(COLOR_OK)Build succeeded!$(COLOR_RESET)"
-// 	@echo $(MESSAGE)
-
-// %.o: %.cpp
-// 	@echo -e "$(COLOR_CXX)Compiling $<...$(COLOR_RESET)"
-// 	@$(CXX) $(CXXFLAGS) -c $< -o $@
-
-// clean:
-// 	@echo -e "$(COLOR_CLEAN)Cleaning object files and target...$(COLOR_RESET)"
-// 	@rm -f $(OBJS)
-
-// fclean: clean
-// 	@echo -e "$(COLOR_CLEAN)Cleaning all including target...$(COLOR_RESET)"
-// 	@rm -f $(TARGET)
-
-// re: fclean
-// 	@echo -e "$(COLOR_RE)Rebuilding the project...$(COLOR_RESET)"
-// 	@$(MAKE) --no-print-directory all
-
-// # Help command to display available commands
-// help:
-// 	@echo -e "$(COLOR_CXX)Available commands:$(COLOR_RESET)"
-// 	@echo -e "  $(COLOR_CXX)make$(COLOR_RESET)       - Build the project"
-// 	@echo -e "  $(COLOR_CXX)make clean$(COLOR_RESET) - Clean object files"
-// 	@echo -e "  $(COLOR_CXX)make fclean$(COLOR_RESET) - Full clean (includes target)"
-// 	@echo -e "  $(COLOR_CXX)make re$(COLOR_RESET)    - Rebuild the project"
-// 	@echo -e "  $(COLOR_CXX)make help$(COLOR_RESET)  - Show this help message"
-
-// .PHONY: all clean fclean re help
+int main()
+{
+    
+    t_data *data;
+    data = init();
+    int gray = 10 % 255;
+    for (int i = 0 ; i < HEIGHT; i++) {
+        for (int j = 0;j < WIDTH; j++) {
+            mlx_put_pixel(data->img, i, j, (gray << 16) | (gray << 8) | gray); }}
+    drawPlayer(data);
+    mlx_loop_hook(data->mlx, input, data);
+    mlx_loop(data->mlx);
+    mlx_terminate(data->mlx);
+    // free_ev(data);
+    return 0;
+}

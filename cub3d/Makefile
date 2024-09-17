@@ -1,6 +1,7 @@
 
 CXX := gcc
-CFLAGS := -Wall -Wextra -Werror -g -fsanitize=address -g -O0
+#CFLAGS := -Wall -Wextra -g -fsanitize=address -g -O0
+CFLAGS := -Wall -Wextra -g -fsanitize=address
 
 # Colors
 COLOR_RESET := \033[0m
@@ -12,7 +13,7 @@ COLOR_RE := \033[1;35m
 COLOR_MSG := \033[1;35m
 
 # Source and output
-SRCS := main.cpp
+SRCS := main.cpp free_err.c init.c
 OBJS := $(SRCS:.cpp=.o)
 TARGET := cub3d
 INCDIR = -I includes -I MLX42/includes
