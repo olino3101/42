@@ -1,9 +1,47 @@
 #include "cub3d.h"
-#include <stdio.h>
-uint32_t buf[H][W];
 
+void init_mlx(t_data *data) 
+{
+    data->mlx = mlx_init(W, H, "42balls", false);
+    if (!data->mlx)
+    {
+        free(data->mlx);
+        exit(0);
+    }
+    data->img = mlx_new_image(data->mlx, W, H);
+    if (!data->img)
+    {
+        mlx_close_window(data->mlx);
+        free(data); 
+    }
+    if (mlx_image_to_window(data->mlx, data->img, 0, 0) < 0)
+	{
+		mlx_close_window(data->mlx);
+		free(data); 
+		exit(0);
+	}
+}
 
-int worldMap[24][24]=
+t_data *init(void) 
+{
+    t_data *data;
+
+    data = malloc(sizeof(t_data));
+    if (!data)
+        exit(0);
+    data->px = 22.0;
+    data->py = 11.5;
+    data->dirx = -1.0;
+    data->diry = 0.0;
+    data->planex = 0;
+    data->planey = 0.66;
+    init_mlx(data);
+
+    data->map = malloc(sizeof(int *) * HMAP);
+    for (int i = 0; i < WMAP; i++)
+        data->map[i] = malloc(sizeof(int) * WMAP);
+
+int map[HMAP][WMAP] =
 {
   {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
   {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
@@ -30,27 +68,10 @@ int worldMap[24][24]=
   {1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
   {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
 };
-
-
-  double posX = 22, posY = 12;  //x and y start position
-  double dirX = -1, dirY = 0; //initial direction vector
-  double planeX = 0, planeY = 0.66;
-
-
-int main()
-{
-    t_data *data;
-    data = init();
-    int gray = 10 % 255;
-    for (int i = 0 ; i < H; i++) {
-        for (int j = 0;j < W; j++) {
-            mlx_put_pixel(data->img, i, j, (gray << 16) | (gray << 8) | gray); }}
-    mlx_image_to_window(data->mlx, data->img, 0, 0);
-    calculate_rt(data);
-
-    // mlx_loop_hook(data->mlx, input, data);
-    mlx_loop(data->mlx);
-    // free_ev(data);
-    mlx_terminate(data->mlx);
-    return 0;
+    for (int i = 0; i < 24; i++)
+    {
+        for( int j = 0; j < 24; j++)
+            data->map[i][j] = map[i][j];
+    }
+    return data;
 }
