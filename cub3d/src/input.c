@@ -53,7 +53,7 @@ static void	key_s(t_data *data)
 		if (!data->map[(int)(data->px - (data->dirx * data->speed))] \
 			[(int)(data->py)])
 			data->px -= data->dirx * data->speed;
-		if (!data->map[(int)(data->px)][(int)(data->py - (data->diry * 2))])
+		if (!data->map[(int)(data->px)][(int)(data->py - (data->diry * data->speed))])
 			data->py -= data->diry * data->speed;
 	}
 }
