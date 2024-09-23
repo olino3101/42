@@ -2,6 +2,7 @@
 
 static	void	walli_init(t_rc *rc, t_data *data, t_print_tex *texs)
 {
+	// check quel est le coter pour quel texture prendre
 	if (rc->side == 1)
 	{
 		if (rc->mapy > data->py)
@@ -24,11 +25,13 @@ t_print_tex	init_print_tex(t_rc *rc, int x, t_data *data)
 	double		wallx;
 
 	walli_init(rc, data, &texs);
+	// wallx sert a savoir quelle parti du murs ca la ete toucher
 	if (rc->side == 0)
 		wallx = data->py + rc->perpwalldist * rc->raydiry;
 	else
 		wallx = data->px + rc->perpwalldist * rc->raydirx;
 	wallx -= floor(wallx);
+	// le x de la texture
 	texs.texx = (int)(wallx * (double)data->texture[texs.tex_i]->width);
 	texs.perpwalldist = rc->perpwalldist;
 	texs.lineheight = (int)(H / texs.perpwalldist);

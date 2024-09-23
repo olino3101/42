@@ -45,29 +45,56 @@ typedef struct s_print_tex
 
 typedef struct s_data
 {
+
+	// pos du joueur toujours entre 0 et le nombre HMAP et WMAP
+		//mais en double parce que il ne se deplace pas par une case chaque fois
 	double			px;
 	double			py;
+
+	// la direction que le joueur regarde
+		// ou ya les define tu peux voir chaque settings pour la direction quand tu lance le programme nord, sud, ouest, est
+		// jsp c quoi le plus efficace pour le faire mais sinon ya aussi la formule pour tourner voir input les touches a et d
 	double			dirx;
 	double			diry;
+
+	// la camera plane du joueur un peu comme le champ de vision
+		// ca doit tjrs etre perpendiculaire a la direction
+		// ca determine le FOV du joueur aussi
 	double			planex;
 	double			planey;
+
+	// duh je pense tu sais c quoi katchow!
 	float			speed;
+
+	//la mlx
 	mlx_t			*mlx;
 	mlx_image_t		*img;
+	// les 4 texture voir init
 	mlx_texture_t	*texture[4];
+	// la map en deux d
 	int				**map;
 }	t_data;
 
 typedef struct s_rc
 {
+	// utiliser pour mapper chaque pixel entre -1 et 1 0 etant le centre
 	double	camerax;
+	// la direction du rayon
 	double	raydirx;
 	double	raydiry;
+
+	// la position du rayon dans la map (genre yer rendu ou a la recherche dun wall)
 	int		mapx;
 	int		mapy;
+
+	// calcul al distance jusquau prochain "saut de case de  la map " y faudrait que je texplique visuellement si tu captes pas
 	double	deltadistx;
 	double	deltadisty;
+
+	// va etre utiliser pour calculer la longueur du ray
 	double	perpwalldist;
+
+	// la distance jusqua la prochaine ligne x ou y (souvent incrementer pour toujours trouver la prochaine ligne)
 	double	sidedistx;
 	double	sidedisty;
 	int		stepx;
