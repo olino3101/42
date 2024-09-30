@@ -1,11 +1,11 @@
 #include "data.hpp"
 
-uintptr_t serialize(Data* ptr) {
-    uintptr_t value = reinterpret_cast<uintptr_t>(ptr);
+unsigned long serialize(Data* ptr) {
+    unsigned long value = reinterpret_cast<unsigned long>(ptr);
     return value;
 }
 
-Data* deserialize(uintptr_t raw) {
+Data* deserialize(unsigned long raw) {
     Data *data = reinterpret_cast<Data *>(raw);
     return data;
 }
@@ -14,7 +14,9 @@ int main()
 {
     Data data;
     data.value = 10;
-    Data *newdata = deserialize(serialize(&data));
+
+	unsigned long serializedData = serialize(&data);
+    Data *newdata = deserialize(serializedData);
 
     std::cout << &data << std::endl;
     std::cout << newdata << std::endl;

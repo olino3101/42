@@ -6,7 +6,7 @@
 
 Base * generate(void) {
     Base *base;
-    std::srand(static_cast<unsigned int>(std::time(0)));
+    std::srand(static_cast<unsigned int>(std::time(0) + std::clock()));
     int rn = std::rand() % 3 + 1;
     switch (rn) {
         case 1:

@@ -2,7 +2,7 @@ CXX = c++
 FLAGS = -std=c++98 -Wall -Wextra -Werror
 SRC = main.cpp
 OBJ = $(SRC:.cpp=.o)
-NAME = ex02
+NAME = ex01
 .PHONY: all clean re fclean
 
 all: $(NAME)
