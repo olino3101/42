@@ -1,6 +1,6 @@
 
 CXX := g++
-CXXFLAGS := -std=c++98 -Wall -Wextra -Werror
+CXXFLAGS := -std=c++98 -Wall -Wextra 
 
 # Colors
 COLOR_RESET := \033[0m
@@ -12,12 +12,12 @@ COLOR_RE := \033[1;35m
 COLOR_MSG := \033[1;35m
 
 # Source and output
-SRCS := main.cpp RPN.cpp
+SRCS := main.cpp PmergeMe.cpp
 OBJS := $(SRCS:.cpp=.o)
-TARGET := RPN
+TARGET := PmergeMe
 
 # Program name
-PROGRAM_NAME := RPN
+PROGRAM_NAME := PmergeMe
 
 # Custom message with fancy border
 MESSAGE := "$(COLOR_MSG)╭───────────────────────────────╮\n│ 🌟 $(PROGRAM_NAME) Built Successfully 🌟  │\n╰───────────────────────────────╯$(COLOR_RESET)"

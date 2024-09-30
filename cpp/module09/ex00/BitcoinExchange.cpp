@@ -32,19 +32,41 @@
 
     bool BitcoinEx::checkLine(std::string line) {
         size_t pos = line.find('-');
-        if ((pos == std::string::npos || stold(line.substr(0, pos)) <= 2000) && printErr("Error: bad input"))
+        if (pos == std::string::npos && printErr("Error: bad input"))
             return false;
-        int i = pos;
-        pos = line.find('-');
-        if ((pos == std::string::npos || stold(line.substr(i + 1, pos)) < 0 || stold(line.substr(i + 1, pos)) > 12) && printErr("Error: bad input "))
+
+        std::string year_str = line.substr(0, pos);
+        double year = stold(year_str);
+        if ((year <= 2000 || year >= 2025) && printErr("Error: bad input"))
             return false;
-        i = pos;
-        pos = line.find('|');
-        if ((pos == std::string::npos || stold(line.substr(i + 1, pos - 1)) < 0 || stold(line.substr(i + 1, pos - 1)) > 31) && printErr("Error: bad input "))
+
+        size_t i = pos + 1;
+        pos = line.find('-', i);
+        if (pos == std::string::npos && printErr("Error: bad input"))
             return false;
-        if (stold(line.substr(pos + 2, line.length())) < 0 && printErr("Error: not a positive number"))
+
+        std::string month_str = line.substr(i, pos - i);
+        double month = stold(month_str);
+        if ((month < 0 || month > 12 || month_str.length() != 2) && printErr("Error: bad input")) 
             return false;
-        if (stold(line.substr(pos + 2, line.length())) > std::numeric_limits<int>::max() && printErr("Error: too large a number"))
+
+        i = pos + 1;
+        pos = line.find('|', i);
+        if (pos == std::string::npos && printErr("Error: bad input"))
+            return false;
+
+
+        std::string day_str = line.substr(i, pos - i - 1);
+        double day = stold(day_str);
+        if ((day < 0 || day > 31 || day_str.length() != 2) && printErr("Error: bad input"))
+            return false;
+
+        std::string value_str = line.substr(pos + 1);
+        double value = stold(value_str);
+        if (value < 0 && printErr("Error: not a positive number"))
+            return false;
+
+        if (value > std::numeric_limits<int>::max() && printErr("Error: too large a number"))
             return false;
         return true;
     }
@@ -82,14 +104,11 @@
         initData();
     }
     BitcoinEx::BitcoinEx(const BitcoinEx & other) {
-        (void)other;
-        file = other.file;
         data = other.data;
     }
     BitcoinEx& BitcoinEx::operator=(const BitcoinEx & other) {
         if (this != &other)
         {
-            file = other.file;
             data = other.data;
         }
         return *this;
