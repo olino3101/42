@@ -48,7 +48,7 @@ int main()
     mlx_image_to_window(data->mlx, data->img, 0, 0);
     calculate_rt(data);
 
-    // mlx_loop_hook(data->mlx, input, data);
+    mlx_loop_hook(data->mlx, input, data);
     mlx_loop(data->mlx);
     // free_ev(data);
     mlx_terminate(data->mlx);

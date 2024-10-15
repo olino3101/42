@@ -14,7 +14,7 @@ bool verline(int x, int y1, int y2, const unsigned int color, t_data *data)
         mlx_put_pixel(data->img, x, y1, color);
         y1++;
     }
-    i = y2;
+    i = y2;`    
     while (i != H)
     {
         mlx_put_pixel(data->img, x, i, 0x0000000);
