@@ -11,7 +11,7 @@ public :
     Array(const Array & other);
     ~Array();
 
-    size_t Size() const;
+    size_t size() const;
 
     Array<T>& operator=(const Array & other);
     T& operator[](unsigned int i) const;
@@ -23,12 +23,12 @@ public :
     };
 private :
     T *arr;
-    size_t size;
+    size_t sizeArr;
 };
 
 template <typename T>
 std::ostream& operator<<( std::ostream& out, const Array<T>& arr) {
-    for ( unsigned int i = 0; i < arr.Size(); i++ )
+    for ( unsigned int i = 0; i < arr.size(); i++ )
         out << arr[i] << " ";
     return out;
 }
