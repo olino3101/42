@@ -14,8 +14,8 @@ class Span {
 public :
     Span(int N);
     ~Span();
-    Span(Span &other);
-    Span& operator=(Span &other);
+    Span(const Span &other);
+    Span& operator=(const Span &other);
     void addNumber(int nbr);
     int shortestSpan();
     int longestSpan();
